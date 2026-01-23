@@ -2,8 +2,10 @@
 
 A WebSocket which exposes MPRIS player metadata and status. Also accepts controls in return.
 
-WebSocket port `8765`  
-Art cover port `8766`
+Recommended to use in combination with:
+
+- [mpris-ws-ha](https://github.com/Yanndroid/mpris-ws-ha)
+- [mpris-frontend](https://github.com/Yanndroid/mpris-frontend)
 
 ### Features
 
@@ -12,6 +14,9 @@ Art cover port `8766`
 - Local art cover paths are available via a http server
 - multiple clients
 - multiple players (can be added/removed dynamically)
+
+WebSocket port: `8765`  
+Art cover port: `8766`
 
 ### JSON format
 
