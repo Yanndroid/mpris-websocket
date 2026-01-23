@@ -1,0 +1,3 @@
+aiohttp>=3.13.3
+dbus-next>=0.2.3
+websockets>=16.0
