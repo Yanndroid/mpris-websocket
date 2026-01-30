@@ -107,6 +107,12 @@ class MprisMonitor:
             return f"http://{HOST}:{PORT_ART}/art/{player}"  # TODO: add random suffix to avoid caching
         return artUrl
 
+    async def _try(self, func, alt):
+        try:
+            return await func()
+        except Exception:
+            return alt
+
     async def update(self):
         @dataclasses.dataclass
         class MF:
@@ -123,8 +129,8 @@ class MprisMonitor:
                 artUrl=self._art_url_wrapper(metadata.get("mpris:artUrl", MF("")).value, name),
                 trackid=metadata.get("mpris:trackid", MF("")).value,
                 length=int(metadata.get("mpris:length", MF(0)).value / 1_000_000),
-                position=int(await iface_player.get_position() / 1_000_000),
-                status=await iface_player.get_playback_status(),
+                position=int(await self._try(iface_player.get_position, 0) / 1_000_000),
+                status=await self._try(iface_player.get_playback_status, "Unknown"),
                 loop=(await iface_player.get_loop_status()) if "get_loop_status" in iface_player.__dict__ else "None",
                 shuffle=(await iface_player.get_shuffle()) if "get_shuffle" in iface_player.__dict__ else False,
             )
