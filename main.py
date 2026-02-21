@@ -104,7 +104,7 @@ class MprisMonitor:
 
     def _art_url_wrapper(self, artUrl: str, player: str) -> str:
         if not artUrl or artUrl.startswith("file://"):
-            return f"http://{HOST}:{PORT_ART}/art/{player}"  # TODO: add random suffix to avoid caching
+            return f"http://localhost:{PORT_ART}/art/{player}"  # TODO: add random suffix to avoid caching
         return artUrl
 
     async def _try(self, func, alt):
@@ -253,7 +253,7 @@ async def main():
                 path = pathlib.Path(artUrl[7:])
                 if path.exists():
                     return path
-        return None
+        return pathlib.Path("placeholder_art.png")
 
     async def on_track_update(track_infos):
         print(f"MPRIS update ({len(track_infos)} players):")
